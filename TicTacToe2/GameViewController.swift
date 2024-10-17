@@ -39,8 +39,8 @@ class GameViewController: UIViewController {
     
     
     // Variables for game state
-        var currentPlayer = "X"  // Alternates between "X" and "O"
-        var board: [String] = ["", "", "", "", "", "", "", "", ""]  // Game board
+        var currentPlayer = "X"
+        var board: [String] = ["", "", "", "", "", "", "", "", ""]
         var player1Points = 0
         var player2Points = 0
         
@@ -54,7 +54,7 @@ class GameViewController: UIViewController {
             playerName1Lbl.text = player1Name ?? "Player 1"
             playerName2Lbl.text = player2Name ?? "Player 2"
             
-            // Add tap gesture recognizers to each box
+            
             addTapGesture(to: box1, index: 0)
             addTapGesture(to: box2, index: 1)
             addTapGesture(to: box3, index: 2)
@@ -79,14 +79,14 @@ class GameViewController: UIViewController {
             let tappedBox = sender.view as! UIImageView
             let index = tappedBox.tag
             
-            // Check if the box is empty before placing a mark
+            
             if board[index] == "" {
                 board[index] = currentPlayer
-                tappedBox.image = UIImage(named: currentPlayer == "X" ? "X_image" : "O_image")  // Use your own X and O images
+                tappedBox.image = UIImage(named: currentPlayer == "X" ? "X_image" : "O_image")
                 
-                // Check for a win or draw
+                
                 if checkForWin() {
-                    // Show win message and update points
+                    
                     if currentPlayer == "X" {
                         player1Points += 1
                         player1Score.text = "\(player1Points)"
@@ -96,11 +96,11 @@ class GameViewController: UIViewController {
                     }
                     resetBoard()
                 } else if board.contains("") == false {
-                    // It's a draw
+                    
                     showAlert(title: "It's a draw", message: "No one wins!")
                     resetBoard()
                 } else {
-                    // Switch player
+                    
                     currentPlayer = (currentPlayer == "X") ? "O" : "X"
                 }
             }
@@ -109,9 +109,9 @@ class GameViewController: UIViewController {
         // Function to check if a player has won
         func checkForWin() -> Bool {
             let winningCombinations = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-                [0, 4, 8], [2, 4, 6]  // Diagonals
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
             ]
             
             for combination in winningCombinations {
@@ -129,16 +129,16 @@ class GameViewController: UIViewController {
         func resetBoard() {
             board = ["", "", "", "", "", "", "", "", ""]
             
-            // Reset all boxes to empty
+            
             [box1, box2, box3, box4, box5, box6, box7, box8, box9].forEach { box in
                 box?.image = nil
             }
             
-            // Optionally, switch starting player after each round
+            
             currentPlayer = "X"
         }
         
-        // Helper function to show an alert
+        
         func showAlert(title: String, message: String) {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
